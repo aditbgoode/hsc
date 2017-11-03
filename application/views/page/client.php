@@ -132,6 +132,25 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Select Age, memilih umur, untuk male-female -->
+            <div class="dropdown text-center">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Select Age
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">age &lt; 20 year</a>
+                    <a class="dropdown-item" href="#">20 years &lt; age &le; 25 year</a>
+                    <a class="dropdown-item" href="#">25 years &lt; age &le; 30 year</a>
+                    <a class="dropdown-item" href="#">30 years &lt; age &le; 35 year</a>
+                    <a class="dropdown-item" href="#">35 years &lt; age &le; 40 year</a>
+                    <a class="dropdown-item" href="#">40 years &lt; age &le; 45 year</a>
+                    <a class="dropdown-item" href="#">45 years &lt; age &le; 50 year</a>
+                    <a class="dropdown-item" href="#">50 years &lt; age &le; 55 year</a>
+                    <a class="dropdown-item" href="#">55 years &lt; age</a>
+                </div>
+            </div>
+            <br>
             <div class="col-md-12">
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="x_panel">
