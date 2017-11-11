@@ -17,9 +17,7 @@
     <!-- Custom Theme Style -->
     <link href="assets/css/style_client.css" rel="stylesheet">
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>  
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
-    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>  
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> 
     
 </head>
@@ -195,6 +193,8 @@
     <script src="assets/vendors/echarts/dist/echarts.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="<?php echo base_url();?>assets/build/js/custom_awal.js"></script>
+    
+     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script>  
       $(document).ready(function(){  
