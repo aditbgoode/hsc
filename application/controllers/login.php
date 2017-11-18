@@ -11,23 +11,33 @@ class Login extends CI_Controller {
 		$this->load->view('temp/head');
         $data['msg'] = $msg;
         $this->load->view('login_view', $data);
-    	$this->load->library('session');
+		session_start();
     }
 	
 	public function process()
 	{    
         $result = $this->RESTLogin($this->input->post('email'), $this->input->post('password'));
-		$this->session->set_userdata($result);
 
-        if($result->error)
+		if(property_exists($result, "error"))
 		{
-            $this->index($result->message);
-        }
+		    $this->index($result->message);
+		}
 		else
 		{
+			$user_array = array(
+				'id' => $result->id,
+				'name' => $result->name,
+				'username' => $result->username,
+				'email' => $result->email
+			);
+
+			$this->session->set_userdata($user_array);
+
+			// $user_data = $this->session->userdata('userdata');
+
             redirect('client');
-        }
-    }	
+		}
+    }
     
     public function do_logout()
 	{
