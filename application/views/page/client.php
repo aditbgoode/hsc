@@ -137,15 +137,15 @@
                     Select Age
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">age &lt; 20 year</a>
-                    <a class="dropdown-item" href="#">20 years &lt; age &le; 25 year</a>
-                    <a class="dropdown-item" href="#">25 years &lt; age &le; 30 year</a>
-                    <a class="dropdown-item" href="#">30 years &lt; age &le; 35 year</a>
-                    <a class="dropdown-item" href="#">35 years &lt; age &le; 40 year</a>
-                    <a class="dropdown-item" href="#">40 years &lt; age &le; 45 year</a>
-                    <a class="dropdown-item" href="#">45 years &lt; age &le; 50 year</a>
-                    <a class="dropdown-item" href="#">50 years &lt; age &le; 55 year</a>
-                    <a class="dropdown-item" href="#">55 years &lt; age</a>
+                    <a class="dropdown-item" id="age0020" href="#">age &lt; 20 year</a>
+                    <a class="dropdown-item" id="age2125" href="#">20 years &lt; age &le; 25 year</a>
+                    <a class="dropdown-item" id="age2630" href="#">25 years &lt; age &le; 30 year</a>
+                    <a class="dropdown-item" id="age3135" href="#">30 years &lt; age &le; 35 year</a>
+                    <a class="dropdown-item" id="age3640" href="#">35 years &lt; age &le; 40 year</a>
+                    <a class="dropdown-item" id="age4145" href="#">40 years &lt; age &le; 45 year</a>
+                    <a class="dropdown-item" id="age4650" href="#">45 years &lt; age &le; 50 year</a>
+                    <a class="dropdown-item" id="age5155" href="#">50 years &lt; age &le; 55 year</a>
+                    <a class="dropdown-item" id="age56100" href="#">55 years &lt; age</a>
                 </div>
             </div>
             <br>
@@ -192,7 +192,7 @@
     <!-- ECharts -->
     <script src="assets/vendors/echarts/dist/echarts.min.js"></script>
     <!-- Custom Theme Scripts -->
-    <!-- <script src="<?php echo base_url();?>assets/build/js/custom_awal.js"></script> -->
+    <script src="<?php echo base_url();?>assets/build/js/custom_awal.js"></script>
 
      <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -238,6 +238,60 @@
 
             var female = [totalHappy[0], totalNormal[0], totalAngry[0]];
             var male = [totalHappy[1], totalNormal[1], totalAngry[1]];
+
+            return {
+                'male': male,
+                'female': female
+            }
+        }
+
+        function getDataFromRangeAge(a, b){
+
+            // Init global
+            var totalHappy = [];
+            var totalNormal = [];
+            var totalAngry = [];
+
+            for(var i = 0; i < 2; i++){
+                totalHappy[i] = 0;
+                totalNormal[i] = 0;
+                totalAngry[i] = 0;
+            }
+
+            // Classify all data
+            for(x in allData.happyscope){
+                var insDataX = allData.happyscope[x];
+                var date = insDataX.timestamp * 1000;
+
+                for(y in insDataX.face_data){
+                    var insDataY = insDataX.face_data[y];
+                    var age = insDataY.age.age;
+
+                    if(a < age && age < b){
+                        var gender = insDataY.gender.gender;
+                        var genderIndex = gender == "Male" ? 1 : 0;
+
+                        var happy = insDataY.expression.happiness;
+                        var normal = insDataY.expression.neutral;
+                        var angry = insDataY.expression.anger;
+
+                        totalHappy[genderIndex] += happy;
+                        totalNormal[genderIndex] += normal;
+                        totalAngry[genderIndex] += angry;
+                    }
+                }
+            }
+
+            var female = {
+                'happy': totalHappy[0], 
+                'normal': totalNormal[0], 
+                'angry': totalAngry[0]
+            };
+            var male = {
+                'happy': totalHappy[1], 
+                'normal': totalNormal[1], 
+                'angry': totalAngry[1]
+            };
 
             return {
                 'male': male,
@@ -302,6 +356,51 @@
                      alert("Please Select Date");  
                 }  
            });  
+            $("#age0020").click(function(e){
+                e.preventDefault();
+                var data = getDataFromRangeAge(0, 20);
+                showByAgeChart(data['male'], data['female']);
+            });
+            $("#age2125").click(function(e){
+                e.preventDefault();
+                var data = getDataFromRangeAge(21, 25);
+                showByAgeChart(data['male'], data['female']);
+            });
+            $("#age2630").click(function(e){
+                e.preventDefault();
+                var data = getDataFromRangeAge(26, 30);
+                showByAgeChart(data['male'], data['female']);
+            });
+            $("#age3135").click(function(e){
+                e.preventDefault();
+                var data = getDataFromRangeAge(31, 35);
+                showByAgeChart(data['male'], data['female']);
+            });
+            $("#age3640").click(function(e){
+                e.preventDefault();
+                var data = getDataFromRangeAge(36, 40);
+                showByAgeChart(data['male'], data['female']);
+            });
+            $("#age4145").click(function(e){
+                e.preventDefault();
+                var data = getDataFromRangeAge(41, 45);
+                showByAgeChart(data['male'], data['female']);
+            });
+            $("#age4650").click(function(e){
+                e.preventDefault();
+                var data = getDataFromRangeAge(46, 50);
+                showByAgeChart(data['male'], data['female']);
+            });
+            $("#age5155").click(function(e){
+                e.preventDefault();
+                var data = getDataFromRangeAge(51, 55);
+                showByAgeChart(data['male'], data['female']);
+            });
+            $("#age56100").click(function(e){
+                e.preventDefault();
+                var data = getDataFromRangeAge(56, 100);
+                showByAgeChart(data['male'], data['female']);
+            });
            if ($('#echart_line').length ){ 
               var theme = {
                   color: [
@@ -675,6 +774,181 @@
     //                    }
                         }]
                       });
+
+                }
+            }
+
+            function showByAgeChart(dataMale, dataFemale){
+                //custom female
+                if ($('#echart_pie_f').length ){  
+                  
+                  var echartPieF = echarts.init(document.getElementById('echart_pie_f'), theme);
+
+                  echartPieF.setOption({
+                    tooltip: {
+                      trigger: 'item',
+                      formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                      x: 'center',
+                      y: 'bottom',
+                      data: ['Happy', 'Normal', 'Angry']
+                    },
+                    toolbox: {
+                      show: true,
+                      feature: {
+                        magicType: {
+                          show: true,
+                          type: ['pie', 'funnel'],
+                          option: {
+                            funnel: {
+                              x: '25%',
+                              width: '50%',
+                              funnelAlign: 'left',
+                              max: 1548
+                            }
+                          }
+                        },
+                        restore: {
+                          show: true,
+                          title: "Restore"
+                        },
+                        saveAsImage: {
+                          show: true,
+                          title: "Save Image"
+                        }
+                      }
+                    },
+                    calculable: true,
+                    series: [{
+                      name: 'female',
+                      type: 'pie',
+                      radius: '55%',
+                      center: ['50%', '48%'],
+                      data: [{
+                        value: dataMale['happy'],
+                        name: 'Happy'
+                      }, {
+                        value: dataMale['normal'],
+                        name: 'Normal'
+                      }, {
+                        value: dataMale['angry'],
+                        name: 'Angry'
+                      }]
+                    }]
+                  });
+
+                  var dataStyle = {
+                    normal: {
+                      label: {
+                        show: false
+                      },
+                      labelLine: {
+                        show: false
+                      }
+                    }
+                  };
+
+                  var placeHolderStyle = {
+                    normal: {
+                      color: 'rgba(0,0,0,0)',
+                      label: {
+                        show: false
+                      },
+                      labelLine: {
+                        show: false
+                      }
+                    },
+                    emphasis: {
+                      color: 'rgba(0,0,0,0)'
+                    }
+                  };
+
+                }
+                //custom male
+                if ($('#echart_pie_m').length ){  
+                  
+                  var echartPieM = echarts.init(document.getElementById('echart_pie_m'), theme);
+
+                  echartPieM.setOption({
+                    tooltip: {
+                      trigger: 'item',
+                      formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                      x: 'center',
+                      y: 'bottom',
+                      data: ['Happy', 'Normal', 'Angry']
+                    },
+                    toolbox: {
+                      show: true,
+                      feature: {
+                        magicType: {
+                          show: true,
+                          type: ['pie', 'funnel'],
+                          option: {
+                            funnel: {
+                              x: '25%',
+                              width: '50%',
+                              funnelAlign: 'left',
+                              max: 1548
+                            }
+                          }
+                        },
+                        restore: {
+                          show: true,
+                          title: "Restore"
+                        },
+                        saveAsImage: {
+                          show: true,
+                          title: "Save Image"
+                        }
+                      }
+                    },
+                    calculable: true,
+                    series: [{
+                      name: 'male',
+                      type: 'pie',
+                      radius: '55%',
+                      center: ['50%', '48%'],
+                      data: [{
+                        value: dataFemale['happy'],
+                        name: 'Happy'
+                      }, {
+                        value: dataFemale['normal'],
+                        name: 'Normal'
+                      }, {
+                        value: dataFemale['angry'],
+                        name: 'Angry'
+                      }]
+                    }]
+                  });
+
+                  var dataStyle = {
+                    normal: {
+                      label: {
+                        show: false
+                      },
+                      labelLine: {
+                        show: false
+                      }
+                    }
+                  };
+
+                  var placeHolderStyle = {
+                    normal: {
+                      color: 'rgba(0,0,0,0)',
+                      label: {
+                        show: false
+                      },
+                      labelLine: {
+                        show: false
+                      }
+                    },
+                    emphasis: {
+                      color: 'rgba(0,0,0,0)'
+                    }
+                  };
 
                 }
             }
