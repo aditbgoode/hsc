@@ -117,10 +117,50 @@
             <div class="col-md-3">  
                  <input type="text" name="to_date" id="to_date" class="form-control" placeholder="To Date" />  
             </div> 
-            <div class="col-md-5">  
-                 <input type="button" name="filter" id="filter" value="Filter" class="btn btn-info" />  
+            <div class="col-md-4">  
+                <div class="dropdown">
+                    <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Filter
+                    <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header" style="font-size:1.3em;">Ages</li>
+                        <li>
+                            <div class="form-check" style="padding: 0px 20px;">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>&nbsp;&nbsp;All
+                                </label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-check" style="padding: 0px 20px;">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                                </label>
+                                &nbsp;&nbsp;<input type="number" name="quantity" min="17" max="100"> s.d. <input type="number" name="quantity" min="17" max="100"><br>
+                            </div>
+                        </li>
+                        
+                        <li class="divider"></li>
+                        
+                        <li class="dropdown-header" style="font-size:1.3em;">Gender</li>
+                        <li>
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="" checked>Male</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="" checked>Female</label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>  
+            </div> 
+            <div class="col-md-2">  
+                 <input type="button" name="filter" id="filter" value="Apply" class="btn btn-info" />  
             </div>  
             <div style="clear:both"></div>   
+            
+            
             
             <div class="col-md-12">&nbsp;</div>        
             <div class="col-md-12">
@@ -132,6 +172,7 @@
             </div>
             
             <!-- Select Age, memilih umur, untuk male-female -->
+<!--
             <div class="dropdown text-center">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Select Age
@@ -173,6 +214,7 @@
                     </div>
                 </div>
             </div>
+-->
         </div>
     </div>
     <!-- /page content -->
@@ -197,91 +239,72 @@
      <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script>  
-
         var allData = <?php echo $data; ?>;
         console.log(allData);
-
         function getDataFromRangeDate(a, b){
-
             // Init global
             var totalHappy = [];
             var totalNormal = [];
             var totalAngry = [];
-
             for(var i = 0; i < 2; i++){
                 totalHappy[i] = 0;
                 totalNormal[i] = 0;
                 totalAngry[i] = 0;
             }
-
             // Classify all data
             for(x in allData.happyscope){
                 var insDataX = allData.happyscope[x];
                 var date = insDataX.timestamp * 1000;
-
                 if(a < date && date < b){
                     for(y in insDataX.face_data){
                         var insDataY = insDataX.face_data[y];
                         var gender = insDataY.gender.gender;
                         var genderIndex = gender == "Male" ? 1 : 0;
-
                         var happy = insDataY.expression.happiness;
                         var normal = insDataY.expression.neutral;
                         var angry = insDataY.expression.anger;
-
                         totalHappy[genderIndex] += happy;
                         totalNormal[genderIndex] += normal;
                         totalAngry[genderIndex] += angry;
                     }
                 }
             }
-
             var female = [totalHappy[0], totalNormal[0], totalAngry[0]];
             var male = [totalHappy[1], totalNormal[1], totalAngry[1]];
-
             return {
                 'male': male,
                 'female': female
             }
         }
-
         function getDataFromRangeAge(a, b){
-
             // Init global
             var totalHappy = [];
             var totalNormal = [];
             var totalAngry = [];
-
             for(var i = 0; i < 2; i++){
                 totalHappy[i] = 0;
                 totalNormal[i] = 0;
                 totalAngry[i] = 0;
             }
-
             // Classify all data
             for(x in allData.happyscope){
                 var insDataX = allData.happyscope[x];
                 var date = insDataX.timestamp * 1000;
-
                 for(y in insDataX.face_data){
                     var insDataY = insDataX.face_data[y];
                     var age = insDataY.age.age;
-
                     if(a < age && age < b){
                         var gender = insDataY.gender.gender;
                         var genderIndex = gender == "Male" ? 1 : 0;
-
                         var happy = insDataY.expression.happiness;
                         var normal = insDataY.expression.neutral;
                         var angry = insDataY.expression.anger;
-
                         totalHappy[genderIndex] += happy;
                         totalNormal[genderIndex] += normal;
                         totalAngry[genderIndex] += angry;
                     }
                 }
             }
-
             var female = {
                 'happy': totalHappy[0], 
                 'normal': totalNormal[0], 
@@ -292,48 +315,37 @@
                 'normal': totalNormal[1], 
                 'angry': totalAngry[1]
             };
-
             return {
                 'male': male,
                 'female': female
             }
         }
-
         $(document).ready(function(){  
-
-
             var nowTime = new Date();
-
             // Init global
             var totalHappy = [];
             var totalNormal = [];
             var totalAngry = [];
-
             for(var i = 0; i < 7; i++){
                 totalHappy[i] = 0;
                 totalNormal[i] = 0;
                 totalAngry[i] = 0;
             }
-
             // Classify all data
             for(x in allData.happyscope){
                 var insDataX = allData.happyscope[x];
                 var date = new Date(insDataX.timestamp * 1000);
-
                 for(y in insDataX.face_data){
                     var insDataY = insDataX.face_data[y];
                     var happy = insDataY.expression.happiness;
                     var normal = insDataY.expression.neutral;
                     var angry = insDataY.expression.anger;
-
                     totalHappy[date.getDay()] += happy;
                     totalNormal[date.getDay()] += normal;
                     totalAngry[date.getDay()] += angry;
                 }
             }
-
             console.log(totalHappy + " " + totalNormal + " " + totalAngry);
-
            $.datepicker.setDefaults({  
                 dateFormat: 'yy-mm-dd'   
            });  
@@ -408,7 +420,6 @@
 //                    '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
 //                    '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
                   ],
-
                   title: {
                       itemGap: 8,
                       textStyle: {
@@ -416,15 +427,12 @@
                           color: '#408829'
                       }
                   },
-
                   dataRange: {
                       color: ['#1f610a', '#97b58d']
                   },
-
                   toolbox: {
                       color: ['#408829', '#408829', '#408829', '#408829']
                   },
-
                   tooltip: {
                       backgroundColor: 'rgba(0,0,0,0.5)',
                       axisPointer: {
@@ -441,7 +449,6 @@
                           }
                       }
                   },
-
                   dataZoom: {
                       dataBackgroundColor: '#eee',
                       fillerColor: 'rgba(64,136,41,0.2)',
@@ -450,7 +457,6 @@
                   grid: {
                       borderWidth: 0
                   },
-
                   categoryAxis: {
                       axisLine: {
                           lineStyle: {
@@ -463,7 +469,6 @@
                           }
                       }
                   },
-
                   valueAxis: {
                       axisLine: {
                           lineStyle: {
@@ -491,7 +496,6 @@
                           emphasis: {color: '#408829'}
                       }
                   },
-
                   k: {
                       itemStyle: {
                           normal: {
@@ -614,9 +618,7 @@
                       fontFamily: 'Arial, Verdana, sans-serif'
                   }
               };
-
               var echartLine = echarts.init(document.getElementById('echart_line'), theme);
-
               echartLine.setOption({
                 title: {
                   text: 'Chart Per hari',
@@ -700,14 +702,11 @@
                   data: totalAngry
                 }]
               });
-
             } 
-
             function showMelFemaleChart(male, female){
                 if ($('#mainb').length ){
                   
                       var echartBar = echarts.init(document.getElementById('mainb'), theme);
-
                       echartBar.setOption({
                         title: {
                           text: 'Index Happiness',
@@ -774,16 +773,13 @@
     //                    }
                         }]
                       });
-
                 }
             }
-
             function showByAgeChart(dataMale, dataFemale){
                 //custom female
                 if ($('#echart_pie_f').length ){  
                   
                   var echartPieF = echarts.init(document.getElementById('echart_pie_f'), theme);
-
                   echartPieF.setOption({
                     tooltip: {
                       trigger: 'item',
@@ -837,7 +833,6 @@
                       }]
                     }]
                   });
-
                   var dataStyle = {
                     normal: {
                       label: {
@@ -848,7 +843,6 @@
                       }
                     }
                   };
-
                   var placeHolderStyle = {
                     normal: {
                       color: 'rgba(0,0,0,0)',
@@ -863,13 +857,11 @@
                       color: 'rgba(0,0,0,0)'
                     }
                   };
-
                 }
                 //custom male
                 if ($('#echart_pie_m').length ){  
                   
                   var echartPieM = echarts.init(document.getElementById('echart_pie_m'), theme);
-
                   echartPieM.setOption({
                     tooltip: {
                       trigger: 'item',
@@ -923,7 +915,6 @@
                       }]
                     }]
                   });
-
                   var dataStyle = {
                     normal: {
                       label: {
@@ -934,7 +925,6 @@
                       }
                     }
                   };
-
                   var placeHolderStyle = {
                     normal: {
                       color: 'rgba(0,0,0,0)',
@@ -949,7 +939,6 @@
                       color: 'rgba(0,0,0,0)'
                     }
                   };
-
                 }
             }
               
