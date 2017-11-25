@@ -20,6 +20,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> 
     
+    <!--  Datatables  -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css"> 
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.bootstrap.min.css"> 
+
 </head>
 
 <body>
@@ -169,52 +174,79 @@
                         <div id="mainb" style="height:350px;">Index Happiness</div>
                     </div>
                 </div>
+                
+                <!-- Table muncul sesuai dengan pilihan filter sebelumnya -->
+                <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Picture</th>
+                            <th>Sound</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Picture</th>
+                            <th>Sound</th>
+                            <th>Time</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr>
+                            <td>Pic 1</td>
+                            <td>Sound 1</td>
+                            <td>Time 1</td>
+                        </tr>
+                        <tr>
+                            <td>Pic 2</td>
+                            <td>Sound 2</td>
+                            <td>Time 2</td>
+                        </tr>
+                        <tr>
+                            <td>Pic 3</td>
+                            <td>Sound 3</td>
+                            <td>Time 3</td>
+                        </tr>
+                        <tr>
+                            <td>Pic 4</td>
+                            <td>Sound 4</td>
+                            <td>Time 4</td>
+                        </tr>
+                        <tr>
+                            <td>Pic 5</td>
+                            <td>Sound 5</td>
+                            <td>Time 5</td>
+                        </tr>
+                        <tr>
+                            <td>Pic 6</td>
+                            <td>Sound 6</td>
+                            <td>Time 6</td>
+                        </tr>
+                        <tr>
+                            <td>Pic 7</td>
+                            <td>Sound 7</td>
+                            <td>Time 7</td>
+                        </tr>
+                        <tr>
+                            <td>Pic 8</td>
+                            <td>Sound 8</td>
+                            <td>Time 8</td>
+                        </tr>
+                        <tr>
+                            <td>Pic 9</td>
+                            <td>Sound 9</td>
+                            <td>Time 9</td>
+                        </tr>
+                        <tr>
+                            <td>Pic 10</td>
+                            <td>Sound 10</td>
+                            <td>Time 10</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
             </div>
             
-            <!-- Select Age, memilih umur, untuk male-female -->
-<!--
-            <div class="dropdown text-center">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Select Age
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" id="age0020" href="#">age &lt; 20 year</a>
-                    <a class="dropdown-item" id="age2125" href="#">20 years &lt; age &le; 25 year</a>
-                    <a class="dropdown-item" id="age2630" href="#">25 years &lt; age &le; 30 year</a>
-                    <a class="dropdown-item" id="age3135" href="#">30 years &lt; age &le; 35 year</a>
-                    <a class="dropdown-item" id="age3640" href="#">35 years &lt; age &le; 40 year</a>
-                    <a class="dropdown-item" id="age4145" href="#">40 years &lt; age &le; 45 year</a>
-                    <a class="dropdown-item" id="age4650" href="#">45 years &lt; age &le; 50 year</a>
-                    <a class="dropdown-item" id="age5155" href="#">50 years &lt; age &le; 55 year</a>
-                    <a class="dropdown-item" id="age56100" href="#">55 years &lt; age</a>
-                </div>
-            </div>
-            <br>
-            <div class="col-md-12">
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Male</h2>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-                            <div id="echart_pie_m" style="height:350px;"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Female</h2>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-                            <div id="echart_pie_f" style="height:350px;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
--->
         </div>
     </div>
     <!-- /page content -->
@@ -236,9 +268,36 @@
     <!-- Custom Theme Scripts -->
     <script src="<?php echo base_url();?>assets/build/js/custom_awal.js"></script>
 
-     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+     
+    <!--  Datatables  -->
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.4.2/js/buttons.html5.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.4.2/js/buttons.print.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.4.2/js/buttons.colVis.min.js"></script>
 
+   
+   
     <script>  
+        // =====Datatables=====
+        $(document).ready(function() {
+            var table = $('#example').DataTable( {
+                lengthChange: false,
+                buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
+            } );
+
+            table.buttons().container()
+                .appendTo( '#example_wrapper .col-sm-6:eq(0)' );
+        } );
+        // =====Datatables End=====
+        
         var allData = <?php echo $data; ?>;
         console.log(allData);
         function getDataFromRangeDate(a, b){
@@ -710,8 +769,24 @@
                       echartBar.setOption({
                         title: {
                           text: 'Index Happiness',
-                          subtext: 'Man - Woman'
+//                          subtext: 'Man - Woman'
                         },
+                          
+                        itemStyle: {
+                            normal: {
+                                color: function(params) {
+                                    // build a color map as your need.
+                                    var colorList = ['#26B99A', '#BDC3C7', '#FF0000'];
+                                    return colorList[params.dataIndex]
+                                },
+                                label: {
+                                    show: true,
+                                    position: 'top',
+                                    formatter: '{b}\n{c}'
+                                }
+                            }
+                        },
+                          
                         tooltip: {
                           trigger: 'axis'
                         },
@@ -730,7 +805,7 @@
                           type: 'value'
                         }],
                         series: [{
-                          name: 'Man',
+//                          name: 'Man',
                           type: 'bar',
                           data: male,
     //                    markPoint: {
@@ -748,10 +823,10 @@
     //                        name: '???'
     //                      }]
     //                    }
-                        }, {
-                          name: 'Woman',
-                          type: 'bar',
-                          data: female,
+//                        }, {
+//                          name: 'Woman',
+//                          type: 'bar',
+//                          data: female,
     //                    markPoint: {
     //                      data: [{
     //                        name: 'sales',
