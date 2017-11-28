@@ -266,7 +266,7 @@
     <!-- ECharts -->
     <script src="assets/vendors/echarts/dist/echarts.min.js"></script>
     <!-- Custom Theme Scripts -->
-    <script src="<?php echo base_url();?>assets/build/js/custom_awal.js"></script>
+    
 
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
      
@@ -407,7 +407,7 @@
             console.log(totalHappy + " " + totalNormal + " " + totalAngry);
            $.datepicker.setDefaults({  
                 dateFormat: 'yy-mm-dd'   
-           });  
+           });
            $(function(){  
                 $("#from_date").datepicker();  
                 $("#to_date").datepicker();  
