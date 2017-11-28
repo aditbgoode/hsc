@@ -126,21 +126,21 @@
                 <div class="dropdown">
                     <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Filter
                     <span class="caret"></span></button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" id="dropdown-age">
                         <li class="dropdown-header" style="font-size:1.3em;">Ages</li>
                         <li>
                             <div class="form-check" style="padding: 0px 20px;">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>&nbsp;&nbsp;All
+                                    <input class="form-check-input" type="radio" name="age-radio" id="exampleRadios1" value="age-all" checked>&nbsp;&nbsp;All
                                 </label>
                             </div>
                         </li>
-                        <li>
+                        <li id="age-range">
                             <div class="form-check" style="padding: 0px 20px;">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                                    <input class="form-check-input" type="radio" name="age-radio" id="exampleRadios2" value="age-range">
                                 </label>
-                                &nbsp;&nbsp;<input type="number" name="quantity" min="17" max="100"> s.d. <input type="number" name="quantity" min="17" max="100"><br>
+                                &nbsp;&nbsp;<input id="age-range-min" type="number" name="quantity" min="17" max="100"> s.d. <input id="age-range-max" type="number" name="quantity" min="17" max="100"><br>
                             </div>
                         </li>
                         
@@ -149,12 +149,12 @@
                         <li class="dropdown-header" style="font-size:1.3em;">Gender</li>
                         <li>
                             <div class="checkbox">
-                                <label><input type="checkbox" value="" checked>Male</label>
+                                <label><input type="checkbox" id="filter-male" value="" checked>Male</label>
                             </div>
                         </li>
                         <li>
                             <div class="checkbox">
-                                <label><input type="checkbox" value="" checked>Female</label>
+                                <label><input type="checkbox" id="filter-female" value="" checked>Female</label>
                             </div>
                         </li>
                     </ul>
@@ -271,7 +271,6 @@
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
      
     <!--  Datatables  -->
-    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
@@ -286,6 +285,34 @@
    
    
     <script>  
+
+        var filterParam = {};
+        var CONST_AGE_RANGE = "age-range";
+        var CONST_AGE_ALL = "age-all";
+        var CONST_AGE_RADIO = "age-radio";
+
+        (() => {
+            filterParam.datax = $('#dropdown-age input[name=' + CONST_AGE_RADIO + ']:checked').val();
+            filterParam.minAge = $('#age-range-min').val();
+            filterParam.maxAge = $('#age-range-max').val();
+            filterParam.filterFemale = $('#filter-female:checked').val() != undefined;
+            filterParam.filterMale = $('#filter-male:checked').val() != undefined;
+        })();
+
+        $('#age-range-min').click(() => {
+            $('#dropdown-age input').filter('[value=' + CONST_AGE_RANGE + ']').prop('checked', true);
+        })
+        $('#age-range-max').click(() => {
+            $('#dropdown-age input').filter('[value=' + CONST_AGE_RANGE + ']').prop('checked', true);
+        })
+        $('#dropdown-age li').click(() => {
+            filterParam.datax = $('#dropdown-age input[name=' + CONST_AGE_RADIO + ']:checked').val();
+            filterParam.minAge = $('#age-range-min').val();
+            filterParam.maxAge = $('#age-range-max').val();
+            filterParam.filterFemale = $('#filter-female:checked').val() != undefined;
+            filterParam.filterMale = $('#filter-male:checked').val() != undefined;
+        });
+
         // =====Datatables=====
         $(document).ready(function() {
             var table = $('#example').DataTable( {
@@ -297,10 +324,12 @@
                 .appendTo( '#example_wrapper .col-sm-6:eq(0)' );
         } );
         // =====Datatables End=====
-        
+
         var allData = <?php echo $data; ?>;
         console.log(allData);
-        function getDataFromRangeDate(a, b){
+
+        // from date to date
+        function getDataFromRangeDate(a, b, paramFilter){
             // Init global
             var totalHappy = [];
             var totalNormal = [];
@@ -318,10 +347,34 @@
                     for(y in insDataX.face_data){
                         var insDataY = insDataX.face_data[y];
                         var gender = insDataY.gender.gender;
+                        var age = insDataY.age.age;
                         var genderIndex = gender == "Male" ? 1 : 0;
                         var happy = insDataY.expression.happiness;
                         var normal = insDataY.expression.neutral;
                         var angry = insDataY.expression.anger;
+
+                        if(paramFilter.datax == CONST_AGE_RANGE && !(paramFilter.minAge < age && age < paramFilter.maxAge)){
+                            // console.log("1");
+                            continue;
+                        }
+
+                        if(!paramFilter.filterMale && !paramFilter.filterFemale){
+                            // console.log("2");
+                            continue;
+                        }
+
+                        if(paramFilter.filterMale && !paramFilter.filterFemale && genderIndex != 1){
+                            // console.log("3");
+                            continue;
+                        }
+
+                        if(!paramFilter.filterMale && paramFilter.filterFemale && genderIndex == 1){
+                            // console.log("4");
+                            continue;
+                        }
+
+                        // console.log("5");
+
                         totalHappy[genderIndex] += happy;
                         totalNormal[genderIndex] += normal;
                         totalAngry[genderIndex] += angry;
@@ -335,50 +388,7 @@
                 'female': female
             }
         }
-        function getDataFromRangeAge(a, b){
-            // Init global
-            var totalHappy = [];
-            var totalNormal = [];
-            var totalAngry = [];
-            for(var i = 0; i < 2; i++){
-                totalHappy[i] = 0;
-                totalNormal[i] = 0;
-                totalAngry[i] = 0;
-            }
-            // Classify all data
-            for(x in allData.happyscope){
-                var insDataX = allData.happyscope[x];
-                var date = insDataX.timestamp * 1000;
-                for(y in insDataX.face_data){
-                    var insDataY = insDataX.face_data[y];
-                    var age = insDataY.age.age;
-                    if(a < age && age < b){
-                        var gender = insDataY.gender.gender;
-                        var genderIndex = gender == "Male" ? 1 : 0;
-                        var happy = insDataY.expression.happiness;
-                        var normal = insDataY.expression.neutral;
-                        var angry = insDataY.expression.anger;
-                        totalHappy[genderIndex] += happy;
-                        totalNormal[genderIndex] += normal;
-                        totalAngry[genderIndex] += angry;
-                    }
-                }
-            }
-            var female = {
-                'happy': totalHappy[0], 
-                'normal': totalNormal[0], 
-                'angry': totalAngry[0]
-            };
-            var male = {
-                'happy': totalHappy[1], 
-                'normal': totalNormal[1], 
-                'angry': totalAngry[1]
-            };
-            return {
-                'male': male,
-                'female': female
-            }
-        }
+
         $(document).ready(function(){  
             var nowTime = new Date();
             // Init global
@@ -419,59 +429,15 @@
                 {  
                     var aDate = new Date(from_date).getTime();
                     var bDate = new Date(to_date).getTime();
-                    var data = getDataFromRangeDate(aDate, bDate);
+                    var data = getDataFromRangeDate(aDate, bDate, filterParam);
                     showMelFemaleChart(data['male'], data['female']);
                 }  
                 else  
                 {  
                      alert("Please Select Date");  
                 }  
-           });  
-            $("#age0020").click(function(e){
-                e.preventDefault();
-                var data = getDataFromRangeAge(0, 20);
-                showByAgeChart(data['male'], data['female']);
-            });
-            $("#age2125").click(function(e){
-                e.preventDefault();
-                var data = getDataFromRangeAge(21, 25);
-                showByAgeChart(data['male'], data['female']);
-            });
-            $("#age2630").click(function(e){
-                e.preventDefault();
-                var data = getDataFromRangeAge(26, 30);
-                showByAgeChart(data['male'], data['female']);
-            });
-            $("#age3135").click(function(e){
-                e.preventDefault();
-                var data = getDataFromRangeAge(31, 35);
-                showByAgeChart(data['male'], data['female']);
-            });
-            $("#age3640").click(function(e){
-                e.preventDefault();
-                var data = getDataFromRangeAge(36, 40);
-                showByAgeChart(data['male'], data['female']);
-            });
-            $("#age4145").click(function(e){
-                e.preventDefault();
-                var data = getDataFromRangeAge(41, 45);
-                showByAgeChart(data['male'], data['female']);
-            });
-            $("#age4650").click(function(e){
-                e.preventDefault();
-                var data = getDataFromRangeAge(46, 50);
-                showByAgeChart(data['male'], data['female']);
-            });
-            $("#age5155").click(function(e){
-                e.preventDefault();
-                var data = getDataFromRangeAge(51, 55);
-                showByAgeChart(data['male'], data['female']);
-            });
-            $("#age56100").click(function(e){
-                e.preventDefault();
-                var data = getDataFromRangeAge(56, 100);
-                showByAgeChart(data['male'], data['female']);
-            });
+           });
+
            if ($('#echart_line').length ){ 
               var theme = {
                   color: [
