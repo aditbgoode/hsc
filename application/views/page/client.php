@@ -107,6 +107,8 @@
         <div class="col-md-12">
             <div class="x_panel">
                 <div class="x_content">
+                    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                    <br/><br/>
                     <div id="echart_line" style="height:350px;">Chart Per hari</div>
                 </div>
             </div>
@@ -174,77 +176,7 @@
                         <div id="mainb" style="height:350px;">Index Happiness</div>
                     </div>
                 </div>
-                
-                <!-- Table muncul sesuai dengan pilihan filter sebelumnya -->
-                <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                    <thead>
-                        <tr>
-                            <th>Picture</th>
-                            <th>Sound</th>
-                            <th>Time</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Picture</th>
-                            <th>Sound</th>
-                            <th>Time</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        <tr>
-                            <td>Pic 1</td>
-                            <td>Sound 1</td>
-                            <td>Time 1</td>
-                        </tr>
-                        <tr>
-                            <td>Pic 2</td>
-                            <td>Sound 2</td>
-                            <td>Time 2</td>
-                        </tr>
-                        <tr>
-                            <td>Pic 3</td>
-                            <td>Sound 3</td>
-                            <td>Time 3</td>
-                        </tr>
-                        <tr>
-                            <td>Pic 4</td>
-                            <td>Sound 4</td>
-                            <td>Time 4</td>
-                        </tr>
-                        <tr>
-                            <td>Pic 5</td>
-                            <td>Sound 5</td>
-                            <td>Time 5</td>
-                        </tr>
-                        <tr>
-                            <td>Pic 6</td>
-                            <td>Sound 6</td>
-                            <td>Time 6</td>
-                        </tr>
-                        <tr>
-                            <td>Pic 7</td>
-                            <td>Sound 7</td>
-                            <td>Time 7</td>
-                        </tr>
-                        <tr>
-                            <td>Pic 8</td>
-                            <td>Sound 8</td>
-                            <td>Time 8</td>
-                        </tr>
-                        <tr>
-                            <td>Pic 9</td>
-                            <td>Sound 9</td>
-                            <td>Time 9</td>
-                        </tr>
-                        <tr>
-                            <td>Pic 10</td>
-                            <td>Sound 10</td>
-                            <td>Time 10</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
+                <div class="col-md-12 col-sm-12 col-xs-12" style="overflow: auto; max-height:80vh;" id="table_image_audio_m2"></div>
             </div>
             
         </div>
@@ -281,10 +213,94 @@
     <script src="//cdn.datatables.net/buttons/1.4.2/js/buttons.html5.min.js"></script>
     <script src="//cdn.datatables.net/buttons/1.4.2/js/buttons.print.min.js"></script>
     <script src="//cdn.datatables.net/buttons/1.4.2/js/buttons.colVis.min.js"></script>
-
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
    
    
     <script>  
+        window.onload = function () {
+
+            var dps = []; // dataPoints
+            var dps2 = []; // dataPoints
+            var dps3 = []; // dataPoints
+            var chart = new CanvasJS.Chart("chartContainer", {
+                exportEnabled: true,
+                animationEnabled: true,
+                title :{
+                    text: "Live Happyscope Data"
+                },
+                axisY: {
+                    includeZero: true
+                },
+                data: [{
+                    type: "spline",
+                    dataPoints: dps,
+                    xValueType: "dateTime",
+                    xValueFormatString: "hh:mm:ss TT"
+                },{
+                    type: "spline",
+                    dataPoints: dps2,
+                    xValueType: "dateTime",
+                    xValueFormatString: "hh:mm:ss TT"
+                },{
+                    type: "spline",
+                    dataPoints: dps3,
+                    xValueType: "dateTime",
+                    xValueFormatString: "hh:mm:ss TT"
+                }]
+            });
+
+            var xVal = 0;
+            var yVal = 100; 
+            var xVal2 = 0;
+            var yVal2 = 100; 
+            var xVal3 = 0;
+            var yVal3 = 100; 
+            var updateInterval = 1000;
+            var dataLength = 20; // number of dataPoints visible at any point
+
+            var updateChart = function (count) {
+                d = new Date();
+
+                count = count || 1;
+
+                for (var j = 0; j < count; j++) {
+                    yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+                    yVal2 = yVal2 +  Math.round(5 + Math.random() *(-5-5));
+                    yVal3 = yVal3 +  Math.round(5 + Math.random() *(-5-5));
+                    dps.push({
+                        x: d.getTime(),
+                        y: yVal
+                    });
+                    dps2.push({
+                        x: d.getTime(),
+                        y: yVal2
+                    });
+                    dps3.push({
+                        x: d.getTime(),
+                        y: yVal3
+                    });
+                    xVal++;
+                    xVal2++;
+                    xVal3++;
+                }
+
+                if (dps.length > dataLength) {
+                    dps.shift();
+                }
+                if (dps2.length > dataLength) {
+                    dps2.shift();
+                }
+                if (dps3.length > dataLength) {
+                    dps3.shift();
+                }
+
+                chart.render();
+            };
+
+            updateChart(dataLength);
+            setInterval(function(){updateChart()}, updateInterval);
+
+        }
 
         var filterParam = {};
         var CONST_AGE_RANGE = "age-range";
@@ -334,6 +350,7 @@
             var totalHappy = [];
             var totalNormal = [];
             var totalAngry = [];
+            var filesx = []
             for(var i = 0; i < 2; i++){
                 totalHappy[i] = 0;
                 totalNormal[i] = 0;
@@ -344,6 +361,11 @@
                 var insDataX = allData.happyscope[x];
                 var date = insDataX.timestamp * 1000;
                 if(a < date && date < b){
+                    filesx.push({
+                        'image': insDataX.image,
+                        'audio': insDataX.audio,
+                        'ts': insDataX.timestamp
+                    });
                     for(y in insDataX.face_data){
                         var insDataY = insDataX.face_data[y];
                         var gender = insDataY.gender.gender;
@@ -385,7 +407,8 @@
             var male = [totalHappy[1], totalNormal[1], totalAngry[1]];
             return {
                 'male': male,
-                'female': female
+                'female': female,
+                'files': filesx
             }
         }
 
@@ -431,6 +454,7 @@
                     var bDate = new Date(to_date).getTime();
                     var data = getDataFromRangeDate(aDate, bDate, filterParam);
                     showMelFemaleChart(data['male'], data['female']);
+                    showMelFemaleDataFiles(data['files']);
                 }  
                 else  
                 {  
@@ -728,6 +752,23 @@
                 }]
               });
             } 
+            function showMelFemaleDataFiles(files){
+                var base_url_public = "http://happyscope.co:3002";
+                files.forEach(function(data){
+                    $('#table_image_audio_m2').append('\
+                        <table>\
+                              <thead>\
+                                  <!--<td>' + "Image: " + data.image + '</td>-->\
+                                  <!--<td>' + "Audio: " + data.audio + '</td>-->\
+                              </thead>\
+                              <tbody>\
+                                  <td><a href="' + base_url_public + '/public/' + data.image + '" target="_blank"><img src="' + base_url_public + '/public/' + data.image + '" width="32" height="32"/></a></td>\
+                                  <td><a href="' + base_url_public + '/public/' + data.audio + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" aria-hidden="true"></i></a>' + new Date(data.ts * 1000) + '</td>\
+                              </tbody>\
+                          </table>\
+                          <hr>');
+                });
+            }
             function showMelFemaleChart(male, female){
                 if ($('#mainb').length ){
                   
