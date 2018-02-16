@@ -107,8 +107,8 @@
         <div class="col-md-12">
             <div class="x_panel">
                 <div class="x_content">
-                    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-                    <br/><br/>
+                    <!-- <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                    <br/><br/> -->
                     <div id="echart_line" style="height:350px;">Chart Per hari</div>
                 </div>
             </div>
@@ -174,6 +174,23 @@
                 <div class="x_panel">
                     <div class="x_content">
                         <div id="mainb" style="height:350px;">Index Happiness</div>
+                    </div>
+                </div>
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="active"><a data-toggle="tab" href="#home">Happy</a></li>
+                    <li><a data-toggle="tab" href="#menuX">Normal</a></li>
+                    <li><a data-toggle="tab" href="#menu2">Angry</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="home" class="tab-pane fade in active">
+                        <div class="col-md-12 col-sm-12 col-xs-12" style="overflow: auto; max-height:80vh;" id="table_image_audio_m2_happy"></div>
+                    </div>
+                    <div id="menuX" class="tab-pane fade">
+                        <div class="col-md-12 col-sm-12 col-xs-12" style="overflow: auto; max-height:80vh;" id="table_image_audio_m2_normal"></div>
+                    </div>
+                    <div id="menu2" class="tab-pane fade">
+                        <div class="col-md-12 col-sm-12 col-xs-12" style="overflow: auto; max-height:80vh;" id="table_image_audio_m2_angry"></div>
                     </div>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xs-12" style="overflow: auto; max-height:80vh;" id="table_image_audio_m2"></div>
@@ -258,47 +275,47 @@
             var updateInterval = 1000;
             var dataLength = 20; // number of dataPoints visible at any point
 
-            var updateChart = function (count) {
-                d = new Date();
+            // var updateChart = function (count) {
+            //     d = new Date();
 
-                count = count || 1;
+            //     count = count || 1;
 
-                for (var j = 0; j < count; j++) {
-                    yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
-                    yVal2 = yVal2 +  Math.round(5 + Math.random() *(-5-5));
-                    yVal3 = yVal3 +  Math.round(5 + Math.random() *(-5-5));
-                    dps.push({
-                        x: d.getTime(),
-                        y: yVal
-                    });
-                    dps2.push({
-                        x: d.getTime(),
-                        y: yVal2
-                    });
-                    dps3.push({
-                        x: d.getTime(),
-                        y: yVal3
-                    });
-                    xVal++;
-                    xVal2++;
-                    xVal3++;
-                }
+            //     for (var j = 0; j < count; j++) {
+            //         yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+            //         yVal2 = yVal2 +  Math.round(5 + Math.random() *(-5-5));
+            //         yVal3 = yVal3 +  Math.round(5 + Math.random() *(-5-5));
+            //         dps.push({
+            //             x: d.getTime(),
+            //             y: yVal
+            //         });
+            //         dps2.push({
+            //             x: d.getTime(),
+            //             y: yVal2
+            //         });
+            //         dps3.push({
+            //             x: d.getTime(),
+            //             y: yVal3
+            //         });
+            //         xVal++;
+            //         xVal2++;
+            //         xVal3++;
+            //     }
 
-                if (dps.length > dataLength) {
-                    dps.shift();
-                }
-                if (dps2.length > dataLength) {
-                    dps2.shift();
-                }
-                if (dps3.length > dataLength) {
-                    dps3.shift();
-                }
+            //     if (dps.length > dataLength) {
+            //         dps.shift();
+            //     }
+            //     if (dps2.length > dataLength) {
+            //         dps2.shift();
+            //     }
+            //     if (dps3.length > dataLength) {
+            //         dps3.shift();
+            //     }
 
-                chart.render();
-            };
+            //     chart.render();
+            // };
 
-            updateChart(dataLength);
-            setInterval(function(){updateChart()}, updateInterval);
+            // updateChart(dataLength);
+            // setInterval(function(){updateChart()}, updateInterval);
 
         }
 
@@ -445,9 +462,10 @@
                 $("#from_date").datepicker();  
                 $("#to_date").datepicker();  
            });
-           $('#filter').click(function(){  
-                var from_date = $('#from_date').val();  
-                var to_date = $('#to_date').val();  
+
+           function filterClicekd(dateA, dateB){
+                var from_date = dateA;
+                var to_date = dateB;
                 if(from_date != '' && to_date != '')  
                 {  
                     var aDate = new Date(from_date).getTime();
@@ -460,7 +478,18 @@
                 {  
                      alert("Please Select Date");  
                 }  
+           }
+           $('#filter').click(function(){  
+                var from_date = $('#from_date').val();  
+                var to_date = $('#to_date').val();  
+                filterClicekd(from_date, to_date);
            });
+
+            var dA = "2018-02-01";
+            var dB = "2018-02-10";
+            $('#from_date').val(dA);  
+            $('#to_date').val(dB);  
+            filterClicekd(dA, dB);
 
            if ($('#echart_line').length ){ 
               var theme = {
@@ -755,7 +784,31 @@
             function showMelFemaleDataFiles(files){
                 var base_url_public = "http://happyscope.co:3002";
                 files.forEach(function(data){
-                    $('#table_image_audio_m2').append('\
+                    $('#table_image_audio_m2_happy').append('\
+                        <table>\
+                              <thead>\
+                                  <!--<td>' + "Image: " + data.image + '</td>-->\
+                                  <!--<td>' + "Audio: " + data.audio + '</td>-->\
+                              </thead>\
+                              <tbody>\
+                                  <td><a href="' + base_url_public + '/public/' + data.image + '" target="_blank"><img src="' + base_url_public + '/public/' + data.image + '" width="32" height="32"/></a></td>\
+                                  <td><a href="' + base_url_public + '/public/' + data.audio + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" aria-hidden="true"></i></a>' + new Date(data.ts * 1000) + '</td>\
+                              </tbody>\
+                          </table>\
+                          <hr>');
+                    $('#table_image_audio_m2_normal').append('\
+                        <table>\
+                              <thead>\
+                                  <!--<td>' + "Image: " + data.image + '</td>-->\
+                                  <!--<td>' + "Audio: " + data.audio + '</td>-->\
+                              </thead>\
+                              <tbody>\
+                                  <td><a href="' + base_url_public + '/public/' + data.image + '" target="_blank"><img src="' + base_url_public + '/public/' + data.image + '" width="32" height="32"/></a></td>\
+                                  <td><a href="' + base_url_public + '/public/' + data.audio + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" aria-hidden="true"></i></a>' + new Date(data.ts * 1000) + '</td>\
+                              </tbody>\
+                          </table>\
+                          <hr>');
+                    $('#table_image_audio_m2_angry').append('\
                         <table>\
                               <thead>\
                                   <!--<td>' + "Image: " + data.image + '</td>-->\
