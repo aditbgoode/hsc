@@ -367,7 +367,11 @@
             var totalHappy = [];
             var totalNormal = [];
             var totalAngry = [];
-            var filesx = []
+            var filesx = {
+                happy: [],
+                normal: [],
+                angry: []
+            }
             for(var i = 0; i < 2; i++){
                 totalHappy[i] = 0;
                 totalNormal[i] = 0;
@@ -378,11 +382,9 @@
                 var insDataX = allData.happyscope[x];
                 var date = insDataX.timestamp * 1000;
                 if(a < date && date < b){
-                    filesx.push({
-                        'image': insDataX.image,
-                        'audio': insDataX.audio,
-                        'ts': insDataX.timestamp
-                    });
+                    totalSementaraHappy = 0;
+                    totalSementaraNormal = 0;
+                    totalSementaraAngry = 0;
                     for(y in insDataX.face_data){
                         var insDataY = insDataX.face_data[y];
                         var gender = insDataY.gender.gender;
@@ -414,9 +416,33 @@
 
                         // console.log("5");
 
+                        totalSementaraHappy += happy;
+                        totalSementaraNormal += normal;
+                        totalSementaraAngry += angry;
+
                         totalHappy[genderIndex] += happy;
                         totalNormal[genderIndex] += normal;
                         totalAngry[genderIndex] += angry;
+                    }
+
+                    if(totalSementaraHappy > totalSementaraAngry && totalSementaraHappy > totalSementaraNormal)
+                        filesx.happy.push({
+                            'image': insDataX.image,
+                            'audio': insDataX.audio,
+                            'ts': insDataX.timestamp
+                        });
+                    else if (totalSementaraAngry > totalSementaraHappy && totalSementaraAngry > totalSementaraNormal) {
+                        filesx.angry.push({
+                            'image': insDataX.image,
+                            'audio': insDataX.audio,
+                            'ts': insDataX.timestamp
+                        });
+                    }else{
+                        filesx.normal.push({
+                            'image': insDataX.image,
+                            'audio': insDataX.audio,
+                            'ts': insDataX.timestamp
+                        });
                     }
                 }
             }
@@ -783,7 +809,10 @@
             } 
             function showMelFemaleDataFiles(files){
                 var base_url_public = "http://happyscope.co:3002";
-                files.forEach(function(data){
+                $('#table_image_audio_m2_happy').append("<br/>");
+                if(files.happy.length == 0)
+                    $('#table_image_audio_m2_happy').append("tidak ada berkas <br/> <br/> <br/>")
+                files.happy.forEach(function(data){
                     $('#table_image_audio_m2_happy').append('\
                         <table>\
                               <thead>\
@@ -796,6 +825,11 @@
                               </tbody>\
                           </table>\
                           <hr>');
+                });
+                $('#table_image_audio_m2_normal').append("<br/>");
+                if(files.normal.length == 0)
+                    $('#table_image_audio_m2_normal').append("tidak ada berkas <br/> <br/> <br/>")
+                files.normal.forEach(function(data){
                     $('#table_image_audio_m2_normal').append('\
                         <table>\
                               <thead>\
@@ -808,6 +842,11 @@
                               </tbody>\
                           </table>\
                           <hr>');
+                });
+                $('#table_image_audio_m2_angry').append("<br/>");
+                if(files.angry.length == 0)
+                    $('#table_image_audio_m2_angry').append("tidak ada berkas <br/> <br/> <br/>")
+                files.angry.forEach(function(data){
                     $('#table_image_audio_m2_angry').append('\
                         <table>\
                               <thead>\
