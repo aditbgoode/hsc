@@ -862,6 +862,9 @@
                 var counterZ = 0;
                 // console.log(files);
                 // return;
+                $('#table_image_audio_m2_happy').html("");
+                $('#table_image_audio_m2_normal').html("");
+                $('#table_image_audio_m2_angry').html("");
                 var base_url_public = "http://happyscope.co:3002";
                 $('#table_image_audio_m2_happy').append("<br/>");
                 if(files.happy.length == 0)
