@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css"> 
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.bootstrap.min.css"> 
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
 </head>
 
@@ -35,7 +36,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="">
                         <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <img src="images/img.jpg" alt=""><span><?php echo $nama; ?></span>
+                        <img src="" alt=""><span><?php echo $nama; ?></span>
                         <span class=" fa fa-angle-down"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -100,33 +101,71 @@
             </div>
         </div>
     </div>
+
     <div class="container">
+
         <div class="clearfix"></div>
-        
+        <div style="margin-top: 48px; margin-bottom: 48px" class="col-md-12">
+            <div style="font-size: 23px; font-family: 'Open Sans', sans-serif;">
+                Hi, <b><?php echo $nama; ?></b>
+            </div>
+            <div style="font-size: 23px; font-family: 'Open Sans', sans-serif;">
+                Welcome to <span style="color: rgb(76,141,53); font-weight: bold;">Happyscope</span>
+            </div>
+            <br/>
+            <br/>
+        <div/>
         <!-- Menampilkan chart per hari selama seminggu terakhir -->
-        <div class="col-md-12">
-            <div class="x_panel">
+        <div class="col-md-12" style="padding-left: 0; padding-right: 0;">
+            <div class="x_panel" style="background: rgba(0, 0, 0, .05);">
                 <div class="x_content">
                     <!-- <div id="chartContainer" style="height: 300px; width: 100%;"></div>
                     <br/><br/> -->
-                    <div id="echart_line" style="height:350px;">Chart Per hari</div>
+                    <div id="echart_line" style="height:350px;">Daily Charts</div>
                 </div>
             </div>
         </div>
         
+
+        <style type="text/css">
+            .input-date{
+                border: solid 1px rgba(0, 0, 0, .5);
+            }
+            #div_from{
+                padding-right: 0 !important;
+            }
+            #div_to{
+                padding-left: 1;
+                padding-right: 0 !important;
+            }
+        </style>
+
+
+
+
+        <div style="margin-top: 48px;margin-left: 0 !important; padding-left: 0 !important" class="col-md-12">
+            <div style="font-size: 23px; font-family: 'Open Sans', sans-serif;">
+                Find your data below!
+            </div>
+            <br/>
+            <br/>
+        </div>
+
         <!-- Menampilkan pilihan tampilan sesuai pilihan (hari ini, kemarin, seminggu kemarin, sebulan kemarin) -->
         <!-- Di dalam kotak ini, nilainya akan berubah sesuai pemilihan -->
         <!-- NB : Masih ada conflict jQuery -->
-        <div class="x_panel"> 
-            <div class="col-md-3">  
-                 <input type="text" name="from_date" id="from_date" class="form-control" placeholder="From Date" />  
+        <div class="x_panel" style="padding-top: 30px;background: rgba(0, 0, 0, .05); margin-top: -12px;"> 
+            <div class="col-md-3" id="div_from">  
+                 <input type="text" name="from_date" id="from_date" class="form-control input-date" placeholder="Choose from date"
+                 style="border: solid 1px rgba(0, 0, 0, .2)" />  
             </div>  
-            <div class="col-md-3">  
-                 <input type="text" name="to_date" id="to_date" class="form-control" placeholder="To Date" />  
+            <div class="col-md-3" id="div_to">  
+                 <input type="text" name="to_date" id="to_date" class="form-control input-date" placeholder="Choose to date"
+                 style="border: solid 1px rgba(0, 0, 0, .2)" />  
             </div> 
             <div class="col-md-4">  
                 <div class="dropdown">
-                    <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Filter
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" style="color: white; background: rgba(0, 0, 0, .5);">Filter
                     <span class="caret"></span></button>
                     <ul class="dropdown-menu" id="dropdown-age">
                         <li class="dropdown-header" style="font-size:1.3em;">Ages</li>
@@ -163,17 +202,20 @@
                 </div>  
             </div> 
             <div class="col-md-2">  
-                 <input type="button" name="filter" id="filter" value="Apply" class="btn btn-info" />  
+                 <input type="button button-primar" name="filter" id="filter" value="Find!" class="btn button-primary" style="position: absolute; right: 15px; color: white; background: rgb(76,141,53)" />  
             </div>  
             <div style="clear:both"></div>   
             
             
             
-            <div class="col-md-12">&nbsp;</div>        
+            <div class="col-md-12">&nbsp;</div>
             <div class="col-md-12">
-                <div class="x_panel">
+                <div class="x_panel" style=" border: none; border-radius: 8px">
                     <div class="x_content">
-                        <div id="mainb" style="height:350px;">Index Happiness</div>
+                        <div id="desc_chart" style="position: absolute; left: 0; width: 100%; text-align: center; top: 165px; font-size: 20px; font-family: 'Open Sans', sans-serif; color: rgb(76,141,53)">
+                            Your chart will be shown here!
+                        </div>
+                        <div id="mainb" style="height:350px;"></div>
                     </div>
                 </div>
                 <ul class="nav nav-tabs nav-justified">
@@ -194,6 +236,9 @@
                     </div>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xs-12" style="overflow: auto; max-height:80vh;" id="table_image_audio_m2"></div>
+            </div>
+            <div class="col-md-12 text-danger" style="font-size: 1.2em; font-family: 'Open Sans', sans-serif; padding: 24px">
+                <center id="select_data">Select your data first!</center>
             </div>
             
         </div>
@@ -230,6 +275,7 @@
     <script src="//cdn.datatables.net/buttons/1.4.2/js/buttons.html5.min.js"></script>
     <script src="//cdn.datatables.net/buttons/1.4.2/js/buttons.print.min.js"></script>
     <script src="//cdn.datatables.net/buttons/1.4.2/js/buttons.colVis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js" type="text/javascript"></script>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
    
    
@@ -382,6 +428,7 @@
                 var insDataX = allData.happyscope[x];
                 var date = insDataX.timestamp * 1000;
                 if(a < date && date < b){
+                    console.log(a, b, date);
                     totalSementaraHappy = 0;
                     totalSementaraNormal = 0;
                     totalSementaraAngry = 0;
@@ -425,23 +472,27 @@
                         totalAngry[genderIndex] += angry;
                     }
 
+                    moment.locale('id');
                     if(totalSementaraHappy > totalSementaraAngry && totalSementaraHappy > totalSementaraNormal)
                         filesx.happy.push({
                             'image': insDataX.image,
                             'audio': insDataX.audio,
-                            'ts': insDataX.timestamp
+                            'ts': insDataX.timestamp,
+                            'date': moment(new Date(insDataX.timestamp * 1000)).format('DD MMMM YYYY HH:mm:ss')
                         });
                     else if (totalSementaraAngry > totalSementaraHappy && totalSementaraAngry > totalSementaraNormal) {
                         filesx.angry.push({
                             'image': insDataX.image,
                             'audio': insDataX.audio,
-                            'ts': insDataX.timestamp
+                            'ts': insDataX.timestamp,
+                            'date': moment(new Date(insDataX.timestamp * 1000)).format('DD MMMM YYYY HH:mm:ss')
                         });
                     }else{
                         filesx.normal.push({
                             'image': insDataX.image,
                             'audio': insDataX.audio,
-                            'ts': insDataX.timestamp
+                            'ts': insDataX.timestamp,
+                            'date': moment(new Date(insDataX.timestamp * 1000)).format('DD MMMM YYYY HH:mm:ss')
                         });
                     }
                 }
@@ -455,7 +506,7 @@
             }
         }
 
-        $(document).ready(function(){  
+        $(document).ready(function(){
             var nowTime = new Date();
             // Init global
             var totalHappy = [];
@@ -497,8 +548,12 @@
                     var aDate = new Date(from_date).getTime();
                     var bDate = new Date(to_date).getTime();
                     var data = getDataFromRangeDate(aDate, bDate, filterParam);
+                    console.log(new Date(aDate), new Date(bDate), data);
                     showMelFemaleChart(data['male'], data['female']);
+                    console.log(data['files']);
                     showMelFemaleDataFiles(data['files']);
+                    $('#select_data').hide();
+                    $('#desc_chart').hide();
                 }  
                 else  
                 {  
@@ -510,12 +565,6 @@
                 var to_date = $('#to_date').val();  
                 filterClicekd(from_date, to_date);
            });
-
-            var dA = "2018-02-01";
-            var dB = "2018-02-10";
-            $('#from_date').val(dA);  
-            $('#to_date').val(dB);  
-            filterClicekd(dA, dB);
 
            if ($('#echart_line').length ){ 
               var theme = {
@@ -807,7 +856,12 @@
                 }]
               });
             } 
+
             function showMelFemaleDataFiles(files){
+
+                var counterZ = 0;
+                // console.log(files);
+                // return;
                 var base_url_public = "http://happyscope.co:3002";
                 $('#table_image_audio_m2_happy').append("<br/>");
                 if(files.happy.length == 0)
@@ -821,11 +875,13 @@
                               </thead>\
                               <tbody>\
                                   <td><a href="' + base_url_public + '/public/' + data.image + '" target="_blank"><img src="' + base_url_public + '/public/' + data.image + '" width="32" height="32"/></a></td>\
-                                  <td><a href="' + base_url_public + '/public/' + data.audio + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" aria-hidden="true"></i></a>' + new Date(data.ts * 1000) + '</td>\
+                                  <td><a href="' + base_url_public + '/public/' + data.audio + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" style="color: #44CC33; font-size: 2em;" aria-hidden="true"> PLAY</i></a>&nbsp;&nbsp;&nbsp;&nbsp;' + data.date + '</td>\
                               </tbody>\
                           </table>\
                           <hr>');
+                    counterZ++;
                 });
+
                 $('#table_image_audio_m2_normal').append("<br/>");
                 if(files.normal.length == 0)
                     $('#table_image_audio_m2_normal').append("tidak ada berkas <br/> <br/> <br/>")
@@ -838,10 +894,11 @@
                               </thead>\
                               <tbody>\
                                   <td><a href="' + base_url_public + '/public/' + data.image + '" target="_blank"><img src="' + base_url_public + '/public/' + data.image + '" width="32" height="32"/></a></td>\
-                                  <td><a href="' + base_url_public + '/public/' + data.audio + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" aria-hidden="true"></i></a>' + new Date(data.ts * 1000) + '</td>\
+                                  <td><a href="' + base_url_public + '/public/' + data.audio + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" style="color: #44CC33; font-size: 2em;" aria-hidden="true"> PLAY</i></a>&nbsp;&nbsp;&nbsp;&nbsp;' + data.date + '</td>\
                               </tbody>\
                           </table>\
                           <hr>');
+                    counterZ++;
                 });
                 $('#table_image_audio_m2_angry').append("<br/>");
                 if(files.angry.length == 0)
@@ -855,10 +912,11 @@
                               </thead>\
                               <tbody>\
                                   <td><a href="' + base_url_public + '/public/' + data.image + '" target="_blank"><img src="' + base_url_public + '/public/' + data.image + '" width="32" height="32"/></a></td>\
-                                  <td><a href="' + base_url_public + '/public/' + data.audio + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" aria-hidden="true"></i></a>' + new Date(data.ts * 1000) + '</td>\
+                                  <td><a href="' + base_url_public + '/public/' + data.audio + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" style="color: #44CC33; font-size: 2em;" aria-hidden="true"> PLAY</i></a>&nbsp;&nbsp;&nbsp;&nbsp;' + data.date + '</td>\
                               </tbody>\
                           </table>\
                           <hr>');
+                    counterZ++;
                 });
             }
             function showMelFemaleChart(male, female){
