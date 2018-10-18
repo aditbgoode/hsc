@@ -475,22 +475,22 @@
                     moment.locale('id');
                     if(totalSementaraHappy > totalSementaraAngry && totalSementaraHappy > totalSementaraNormal)
                         filesx.happy.push({
-                            'image': insDataX.image,
-                            'audio': insDataX.audio,
+                            'image': insDataX.status_image ? insDataX.image : null,
+                            'audio': insDataX.status_audio ? insDataX.audio : null,
                             'ts': insDataX.timestamp,
                             'date': moment(new Date(insDataX.timestamp * 1000)).format('DD MMMM YYYY HH:mm:ss')
                         });
                     else if (totalSementaraAngry > totalSementaraHappy && totalSementaraAngry > totalSementaraNormal) {
                         filesx.angry.push({
-                            'image': insDataX.image,
-                            'audio': insDataX.audio,
+                            'image': insDataX.status_image ? insDataX.image : null,
+                            'audio': insDataX.status_audio ? insDataX.audio : null,
                             'ts': insDataX.timestamp,
                             'date': moment(new Date(insDataX.timestamp * 1000)).format('DD MMMM YYYY HH:mm:ss')
                         });
                     }else{
                         filesx.normal.push({
-                            'image': insDataX.image,
-                            'audio': insDataX.audio,
+                            'image': insDataX.status_image ? insDataX.image : null,
+                            'audio': insDataX.status_audio ? insDataX.audio : null,
                             'ts': insDataX.timestamp,
                             'date': moment(new Date(insDataX.timestamp * 1000)).format('DD MMMM YYYY HH:mm:ss')
                         });
@@ -897,7 +897,7 @@
                               </thead>\
                               <tbody>\
                                   <td><a href="' + base_url_public + '/public/' + data.image + '" target="_blank"><img src="' + base_url_public + '/public/' + data.image + '" width="32" height="32"/></a></td>\
-                                  <td><a href="' + base_url_public + '/public/' + data.audio + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" style="color: #44CC33; font-size: 2em;" aria-hidden="true"> PLAY</i></a>&nbsp;&nbsp;&nbsp;&nbsp;' + data.date + '</td>\
+                                  <td>' + (data.audio ? '<a href="' + base_url_public + '/public/' + data.audio + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" style="color: #44CC33; font-size: 2em;" aria-hidden="true"> PLAY</i></a>' : '') + '&nbsp;&nbsp;&nbsp;&nbsp;' + data.date + '</td>\
                               </tbody>\
                           </table>\
                           <hr>');
@@ -915,7 +915,7 @@
                               </thead>\
                               <tbody>\
                                   <td><a href="' + base_url_public + '/public/' + data.image + '" target="_blank"><img src="' + base_url_public + '/public/' + data.image + '" width="32" height="32"/></a></td>\
-                                  <td><a href="' + base_url_public + '/public/' + data.audio + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" style="color: #44CC33; font-size: 2em;" aria-hidden="true"> PLAY</i></a>&nbsp;&nbsp;&nbsp;&nbsp;' + data.date + '</td>\
+                                  <td>' + (data.audio ? '<a href="' + base_url_public + '/public/' + data.audio + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" style="color: #44CC33; font-size: 2em;" aria-hidden="true"> PLAY</i></a>' : '') + '&nbsp;&nbsp;&nbsp;&nbsp;' + data.date + '</td>\
                               </tbody>\
                           </table>\
                           <hr>');
