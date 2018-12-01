@@ -397,7 +397,7 @@
         // =====Datatables=====
         $(document).ready(function() {
             var base_url_public = "http://happyscope.co:3002";
-            dt1 = $('#example').DataTable( {
+            dt1 = $('#table_image_audio_m2_happy').DataTable( {
                 data: dataSet1,
                 columns: [
                     { title: "Image",
@@ -414,7 +414,7 @@
             } );
             dt1.buttons().container()
                 .appendTo( '#example_wrapper .col-sm-6:eq(0)' );
-            dt2 = $('#example').DataTable( {
+            dt2 = $('#table_image_audio_m2_normal').DataTable( {
                 data: dataSet1,
                 columns: [
                     { title: "Image",
@@ -431,7 +431,7 @@
             } );
             dt2.buttons().container()
                 .appendTo( '#example_wrapper .col-sm-6:eq(0)' );
-            dt3 = $('#example').DataTable( {
+            dt3 = $('#table_image_audio_m2_angry').DataTable( {
                 data: dataSet1,
                 columns: [
                     { title: "Image",
