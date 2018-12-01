@@ -403,7 +403,7 @@
                 columns: [
                     { title: "Image",
                     render: function ( data, type, row ) {
-                        return '<a href="' + base_url_public + '/public/' + data + '" target="_blank"><img src="' + base_url_public + '/public/' + data + '" width="32" height="32"/></a>';
+                        return '<a href="' + data + '" target="_blank"><img src="' + data + '" width="32" height="32"/></a>';
                     } },
                     { title: "Audio",
                     render: function ( data, type, row ) {
