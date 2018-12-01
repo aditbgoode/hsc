@@ -409,7 +409,7 @@
                     } },
                     { title: "Audio",
                     render: function ( data, type, row ) {
-                        return (data ? '<a href="' + base_url_public + '/public/' + data + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" style="color: #44CC33; font-size: 2em;" aria-hidden="true"> PLAY</i></a>' : '') + '&nbsp;&nbsp;&nbsp;&nbsp;';
+                        return (data ? '<a href="' + data + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" style="color: #44CC33; font-size: 2em;" aria-hidden="true"> PLAY</i></a>' : '') + '&nbsp;&nbsp;&nbsp;&nbsp;';
                     } },
                     { title: "Timestamp" }
                 ],
@@ -426,7 +426,7 @@
                     } },
                     { title: "Audio",
                     render: function ( data, type, row ) {
-                        return (data ? '<a href="' + base_url_public + '/public/' + data + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" style="color: #44CC33; font-size: 2em;" aria-hidden="true"> PLAY</i></a>' : '') + '&nbsp;&nbsp;&nbsp;&nbsp;';
+                        return (data ? '<a href="' + data + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" style="color: #44CC33; font-size: 2em;" aria-hidden="true"> PLAY</i></a>' : '') + '&nbsp;&nbsp;&nbsp;&nbsp;';
                     } },
                     { title: "Timestamp" }
                 ],
