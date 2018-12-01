@@ -394,10 +394,9 @@
         });
 
         var dataSet1 = [];
-        var dt1;
         // =====Datatables=====
         $(document).ready(function() {
-            dt1 = $('#example').DataTable( {
+            var table = $('#example').DataTable( {
                 data: dataSet1,
                 columns: [
                     { title: "Image" },
@@ -406,7 +405,7 @@
                 buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
             } );
 
-            dt1.buttons().container()
+            table.buttons().container()
                 .appendTo( '#example_wrapper .col-sm-6:eq(0)' );
         } );
         // =====Datatables End=====
@@ -890,7 +889,7 @@
                         </tr>');
                     counterZ++;
                 });
-                dt1.fnDraw();
+                $('#example').DataTable().ajax.reload();
 
                 $('#table_image_audio_m2_normal').append("<br/>");
                 if(files.normal.length == 0)
