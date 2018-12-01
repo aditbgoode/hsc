@@ -401,7 +401,8 @@
                 data: dataSet1,
                 columns: [
                     { title: "Image" },
-                    { title: "Audio" }
+                    { title: "Audio" },
+                    { title: "Timestamp" }
                 ],
                 columnDefs: [{
                     render: function ( data, type, row ) {
