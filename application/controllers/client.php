@@ -12,6 +12,7 @@ class Client extends CI_Controller {
         $data['username'] = $this->session->userdata('username');
         $data['nama'] = $this->session->userdata('name');
         $data['data'] = json_encode($this->RESTGetAllData());
+        $data['data2'] = json_encode($this->RESTGetAllData());
 		$this->load->view('page/client', $data);
 		// echo json_encode($this->session->userdata('name'));
 	}
