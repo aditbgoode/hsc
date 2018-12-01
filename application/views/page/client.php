@@ -400,23 +400,16 @@
             dt1 = $('#example').DataTable( {
                 data: dataSet1,
                 columns: [
-                    { title: "Image" },
-                    { title: "Audio" },
-                    { title: "Timestamp" }
-                ],
-                columnDefs: [{
+                    { title: "Image",
                     render: function ( data, type, row ) {
                         return '<a href="' + base_url_public + '/public/' + data + '" target="_blank"><img src="' + base_url_public + '/public/' + data + '" width="32" height="32"/></a>';
-                    }
-                }, {
+                    } },
+                    { title: "Audio",
                     render: function ( data, type, row ) {
                         return (data ? '<a href="' + base_url_public + '/public/' + data + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" style="color: #44CC33; font-size: 2em;" aria-hidden="true"> PLAY</i></a>' : '') + '&nbsp;&nbsp;&nbsp;&nbsp;';
-                    }
-                }, {
-                    render: function ( data, type, row ) {
-                        return data;
-                    }
-                }],
+                    } },
+                    { title: "Timestamp" }
+                ],
                 buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
             } );
 
@@ -895,7 +888,8 @@
                 files.happy.forEach(function(data){
                     dataSet1.push([
                         base_url_public + '/public/' + data.image,
-                        base_url_public + '/public/' + data.audio
+                        base_url_public + '/public/' + data.audio,
+                        data.date
                     ]);
                     $('#table_image_audio_m2_happy').append('\
                         <tr>\
