@@ -394,8 +394,7 @@
         });
 
         var dataSet1 = [];
-        // =====Datatables=====
-        $(document).ready(function() {
+        var showData1 = () => {
             var table = $('#example').DataTable( {
                 data: dataSet1,
                 columns: [
@@ -407,8 +406,7 @@
 
             table.buttons().container()
                 .appendTo( '#example_wrapper .col-sm-6:eq(0)' );
-        } );
-        // =====Datatables End=====
+        };
 
         var allData = <?php echo $data; ?>;
         console.log(allData);
@@ -889,6 +887,7 @@
                         </tr>');
                     counterZ++;
                 });
+                showData1();
 
                 $('#table_image_audio_m2_normal').append("<br/>");
                 if(files.normal.length == 0)
