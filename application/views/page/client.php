@@ -911,6 +911,7 @@
 
             function showMelFemaleDataFiles(files){
                 var base_url_public = "http://happyscope.co:3002";
+                dataSet1 = [];
                 files.happy.forEach(function(data){
                     dataSet1.push([
                         base_url_public + '/public/' + data.image,
@@ -920,6 +921,7 @@
                 });
                 dt1.clear().rows.add(dataSet1).draw();
 
+                dataSet2 = [];
                 files.normal.forEach(function(data){
                     dataSet2.push([
                         base_url_public + '/public/' + data.image,
@@ -929,6 +931,7 @@
                 });
                 dt2.clear().rows.add(dataSet2).draw();
 
+                dataSet3 = [];
                 files.angry.forEach(function(data){
                     dataSet3.push([
                         base_url_public + '/public/' + data.image,
