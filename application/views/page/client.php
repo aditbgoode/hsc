@@ -397,6 +397,7 @@
         var dt1;
         // =====Datatables=====
         $(document).ready(function() {
+            var base_url_public = "http://happyscope.co:3002";
             dt1 = $('#example').DataTable( {
                 data: dataSet1,
                 columns: [
