@@ -413,7 +413,7 @@
                 buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
             } );
             dt1.buttons().container()
-                .appendTo( '#example_wrapper .col-sm-6:eq(0)' );
+                .appendTo( '#table_image_audio_m2_happy_wrapper .col-sm-6:eq(0)' );
             dt2 = $('#table_image_audio_m2_normal').DataTable( {
                 data: dataSet1,
                 columns: [
@@ -430,7 +430,7 @@
                 buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
             } );
             dt2.buttons().container()
-                .appendTo( '#example_wrapper .col-sm-6:eq(0)' );
+                .appendTo( '#table_image_audio_m2_normal_wrapper .col-sm-6:eq(0)' );
             dt3 = $('#table_image_audio_m2_angry').DataTable( {
                 data: dataSet1,
                 columns: [
@@ -447,7 +447,7 @@
                 buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
             } );
             dt3.buttons().container()
-                .appendTo( '#example_wrapper .col-sm-6:eq(0)' );
+                .appendTo( '#table_image_audio_m2_angry_wrapper .col-sm-6:eq(0)' );
         } );
         // =====Datatables End=====
 
