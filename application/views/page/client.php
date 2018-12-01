@@ -227,22 +227,7 @@
                 <div class="tab-content">
                     <div id="home" class="tab-pane fade in active">
                         <div class="col-md-12 col-sm-12 col-xs-12" style="overflow: auto; max-height:80vh;" id="table_image_audio_m2_happy"></div>
-                        <table id="example" class="table table-striped table-bordered" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Audio</th>
-                                </tr>
-                            </thead>
-                            <tbody id="table_image_audio_m2_happy">
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Audio</th>
-                                </tr>
-                            </tfoot>
-                        </table>
+                        <table id="example" class="table table-striped table-bordered" style="width:100%"></table>
                     </div>
                     <div id="menuX" class="tab-pane fade">
                         <div class="col-md-12 col-sm-12 col-xs-12" style="overflow: auto; max-height:80vh;" id="table_image_audio_m2_normal"></div>
@@ -408,10 +393,15 @@
             filterParam.filterMale = $('#filter-male:checked').val() != undefined;
         });
 
+        var dataSet1 = [];
         // =====Datatables=====
         $(document).ready(function() {
             var table = $('#example').DataTable( {
-                lengthChange: true,
+                data: dataSet1,
+                columns: [
+                    { title: "Image" },
+                    { title: "Audio" }
+                ],
                 buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
             } );
 
@@ -888,6 +878,10 @@
                 if(files.happy.length == 0)
                     $('#table_image_audio_m2_happy').append("tidak ada berkas <br/> <br/> <br/>")
                 files.happy.forEach(function(data){
+                    dataSet1.push({
+                        image: base_url_public + '/public/' + data.image,
+                        audio: base_url_public + '/public/' + data.audio
+                    });
                     $('#table_image_audio_m2_happy').append('\
                         <tr>\
                           <td><a href="' + base_url_public + '/public/' + data.image + '" target="_blank"><img src="' + base_url_public + '/public/' + data.image + '" width="32" height="32"/></a></td>\
