@@ -226,12 +226,15 @@
 
                 <div class="tab-content">
                     <div id="home" class="tab-pane fade in active">
+                        <br/>
                         <table id="table_image_audio_m2_happy" class="table table-striped table-bordered" style="width:100%"></table>
                     </div>
                     <div id="menuX" class="tab-pane fade">
+                        <br/>
                         <table id="table_image_audio_m2_normal" class="table table-striped table-bordered" style="width:100%"></table>
                     </div>
                     <div id="menu2" class="tab-pane fade">
+                        <br/>
                         <table id="table_image_audio_m2_angry" class="table table-striped table-bordered" style="width:100%"></table>
                     </div>
                 </div>
