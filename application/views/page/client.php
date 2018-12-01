@@ -890,7 +890,7 @@
                         </tr>');
                     counterZ++;
                 });
-                dt1.reload();
+                dt1.fnDraw();
 
                 $('#table_image_audio_m2_normal').append("<br/>");
                 if(files.normal.length == 0)
