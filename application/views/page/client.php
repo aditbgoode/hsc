@@ -879,10 +879,10 @@
                 if(files.happy.length == 0)
                     $('#table_image_audio_m2_happy').append("tidak ada berkas <br/> <br/> <br/>")
                 files.happy.forEach(function(data){
-                    dataSet1.push({
-                        image: base_url_public + '/public/' + data.image,
-                        audio: base_url_public + '/public/' + data.audio
-                    });
+                    dataSet1.push([
+                        base_url_public + '/public/' + data.image,
+                        base_url_public + '/public/' + data.audio
+                    ]);
                     $('#table_image_audio_m2_happy').append('\
                         <tr>\
                           <td><a href="' + base_url_public + '/public/' + data.image + '" target="_blank"><img src="' + base_url_public + '/public/' + data.image + '" width="32" height="32"/></a></td>\
