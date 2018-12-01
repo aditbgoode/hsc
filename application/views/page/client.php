@@ -394,20 +394,22 @@
         });
 
         var dataSet1 = [];
-        var showData1 = () => {
-            var table = $('#example').DataTable( {
+        var dt1;
+        // =====Datatables=====
+        $(document).ready(function() {
+            dt1 = $('#example').DataTable( {
                 data: dataSet1,
                 columns: [
                     { title: "Image" },
                     { title: "Audio" }
                 ],
-                bDestroy: true,
                 buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
             } );
 
-            table.buttons().container()
+            dt1.buttons().container()
                 .appendTo( '#example_wrapper .col-sm-6:eq(0)' );
-        };
+        } );
+        // =====Datatables End=====
 
         var allData = <?php echo $data; ?>;
         console.log(allData);
@@ -888,7 +890,7 @@
                         </tr>');
                     counterZ++;
                 });
-                showData1();
+                dt1.reload();
 
                 $('#table_image_audio_m2_normal').append("<br/>");
                 if(files.normal.length == 0)
