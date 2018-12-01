@@ -226,14 +226,13 @@
 
                 <div class="tab-content">
                     <div id="home" class="tab-pane fade in active">
-                        <div class="col-md-12 col-sm-12 col-xs-12" style="overflow: auto; max-height:80vh;" id="table_image_audio_m2_happy"></div>
-                        <table id="example" class="table table-striped table-bordered" style="width:100%"></table>
+                        <table id="table_image_audio_m2_happy" class="table table-striped table-bordered" style="width:100%"></table>
                     </div>
                     <div id="menuX" class="tab-pane fade">
-                        <div class="col-md-12 col-sm-12 col-xs-12" style="overflow: auto; max-height:80vh;" id="table_image_audio_m2_normal"></div>
+                        <table id="table_image_audio_m2_normal" class="table table-striped table-bordered" style="width:100%"></table>
                     </div>
                     <div id="menu2" class="tab-pane fade">
-                        <div class="col-md-12 col-sm-12 col-xs-12" style="overflow: auto; max-height:80vh;" id="table_image_audio_m2_angry"></div>
+                        <table id="table_image_audio_m2_angry" class="table table-striped table-bordered" style="width:100%"></table>
                     </div>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xs-12" style="overflow: auto; max-height:80vh;" id="table_image_audio_m2"></div>
@@ -393,8 +392,8 @@
             filterParam.filterMale = $('#filter-male:checked').val() != undefined;
         });
 
-        var dataSet1 = [];
-        var dt1;
+        var dataSet1 = [], dataSet2 = [], dataSet3 = [];
+        var dt1, dt2, dt3;
         // =====Datatables=====
         $(document).ready(function() {
             var base_url_public = "http://happyscope.co:3002";
@@ -413,8 +412,41 @@
                 ],
                 buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
             } );
-
             dt1.buttons().container()
+                .appendTo( '#example_wrapper .col-sm-6:eq(0)' );
+            dt2 = $('#example').DataTable( {
+                data: dataSet1,
+                columns: [
+                    { title: "Image",
+                    render: function ( data, type, row ) {
+                        return '<a href="' + data + '" target="_blank"><img src="' + data + '" width="32" height="32"/></a>';
+                    } },
+                    { title: "Audio",
+                    render: function ( data, type, row ) {
+                        return (data ? '<a href="' + base_url_public + '/public/' + data + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" style="color: #44CC33; font-size: 2em;" aria-hidden="true"> PLAY</i></a>' : '') + '&nbsp;&nbsp;&nbsp;&nbsp;';
+                    } },
+                    { title: "Timestamp" }
+                ],
+                buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
+            } );
+            dt2.buttons().container()
+                .appendTo( '#example_wrapper .col-sm-6:eq(0)' );
+            dt3 = $('#example').DataTable( {
+                data: dataSet1,
+                columns: [
+                    { title: "Image",
+                    render: function ( data, type, row ) {
+                        return '<a href="' + data + '" target="_blank"><img src="' + data + '" width="32" height="32"/></a>';
+                    } },
+                    { title: "Audio",
+                    render: function ( data, type, row ) {
+                        return (data ? '<a href="' + base_url_public + '/public/' + data + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" style="color: #44CC33; font-size: 2em;" aria-hidden="true"> PLAY</i></a>' : '') + '&nbsp;&nbsp;&nbsp;&nbsp;';
+                    } },
+                    { title: "Timestamp" }
+                ],
+                buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
+            } );
+            dt3.buttons().container()
                 .appendTo( '#example_wrapper .col-sm-6:eq(0)' );
         } );
         // =====Datatables End=====
@@ -875,68 +907,33 @@
             } 
 
             function showMelFemaleDataFiles(files){
-
-                var counterZ = 0;
-                // console.log(files);
-                // return;
-                $('#table_image_audio_m2_happy').html("");
-                $('#table_image_audio_m2_normal').html("");
-                $('#table_image_audio_m2_angry').html("");
-                var base_url_public = "http://happyscope.co:3002";
-                $('#table_image_audio_m2_happy').append("<br/>");
-                if(files.happy.length == 0)
-                    $('#table_image_audio_m2_happy').append("tidak ada berkas <br/> <br/> <br/>")
                 files.happy.forEach(function(data){
                     dataSet1.push([
                         base_url_public + '/public/' + data.image,
                         base_url_public + '/public/' + data.audio,
                         data.date
                     ]);
-                    $('#table_image_audio_m2_happy').append('\
-                        <tr>\
-                          <td><a href="' + base_url_public + '/public/' + data.image + '" target="_blank"><img src="' + base_url_public + '/public/' + data.image + '" width="32" height="32"/></a></td>\
-                          <td><a href="' + base_url_public + '/public/' + data.audio + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" style="color: #44CC33; font-size: 2em;" aria-hidden="true"> PLAY</i></a>&nbsp;&nbsp;&nbsp;&nbsp;' + data.date + '</td>\
-                        </tr>');
-                    counterZ++;
                 });
-                dt1.clear().rows.add(dataSet1).draw();
 
-                $('#table_image_audio_m2_normal').append("<br/>");
-                if(files.normal.length == 0)
-                    $('#table_image_audio_m2_normal').append("tidak ada berkas <br/> <br/> <br/>")
                 files.normal.forEach(function(data){
-                    $('#table_image_audio_m2_normal').append('\
-                        <table>\
-                              <thead>\
-                                  <!--<td>' + "Image: " + data.image + '</td>-->\
-                                  <!--<td>' + "Audio: " + data.audio + '</td>-->\
-                              </thead>\
-                              <tbody>\
-                                  <td><a href="' + base_url_public + '/public/' + data.image + '" target="_blank"><img src="' + base_url_public + '/public/' + data.image + '" width="32" height="32"/></a></td>\
-                                  <td>' + (data.audio ? '<a href="' + base_url_public + '/public/' + data.audio + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" style="color: #44CC33; font-size: 2em;" aria-hidden="true"> PLAY</i></a>' : '') + '&nbsp;&nbsp;&nbsp;&nbsp;' + data.date + '</td>\
-                              </tbody>\
-                          </table>\
-                          <hr>');
-                    counterZ++;
+                    dataSet2.push([
+                        base_url_public + '/public/' + data.image,
+                        base_url_public + '/public/' + data.audio,
+                        data.date
+                    ]);
                 });
-                $('#table_image_audio_m2_angry').append("<br/>");
-                if(files.angry.length == 0)
-                    $('#table_image_audio_m2_angry').append("tidak ada berkas <br/> <br/> <br/>")
+
                 files.angry.forEach(function(data){
-                    $('#table_image_audio_m2_angry').append('\
-                        <table>\
-                              <thead>\
-                                  <!--<td>' + "Image: " + data.image + '</td>-->\
-                                  <!--<td>' + "Audio: " + data.audio + '</td>-->\
-                              </thead>\
-                              <tbody>\
-                                  <td><a href="' + base_url_public + '/public/' + data.image + '" target="_blank"><img src="' + base_url_public + '/public/' + data.image + '" width="32" height="32"/></a></td>\
-                                  <td>' + (data.audio ? '<a href="' + base_url_public + '/public/' + data.audio + '" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-play" style="color: #44CC33; font-size: 2em;" aria-hidden="true"> PLAY</i></a>' : '') + '&nbsp;&nbsp;&nbsp;&nbsp;' + data.date + '</td>\
-                              </tbody>\
-                          </table>\
-                          <hr>');
-                    counterZ++;
+                    dataSet3.push([
+                        base_url_public + '/public/' + data.image,
+                        base_url_public + '/public/' + data.audio,
+                        data.date
+                    ]);
                 });
+                
+                dt1.clear().rows.add(dataSet1).draw();
+                dt2.clear().rows.add(dataSet2).draw();
+                dt3.clear().rows.add(dataSet3).draw();
             }
             function showMelFemaleChart(male, female){
                 if ($('#mainb').length ){
