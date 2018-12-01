@@ -401,6 +401,7 @@
                     { title: "Image" },
                     { title: "Audio" }
                 ],
+                bDestroy: true,
                 buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
             } );
 
