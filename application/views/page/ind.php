@@ -30,9 +30,9 @@
 
     <section id="home" name="home"></section>
     <div id="headerwrap">
-        <div class="container">
+        <div class="container special-container">
             <div class="row">
-                <div class="col-md-6 col-md-offset-2">
+                <div class="col-md-6 col-md-offset-2 special-container-no-margin">
                     <h1>HAPPYSCOPE</h1>
                 </div>
             </div><!--/row -->

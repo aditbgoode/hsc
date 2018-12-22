@@ -266,9 +266,9 @@ h1, h2, h3, h4, h5, h6 {
    ========================================================================== */
 
 #headerwrap {
-	background: url(../img/produk/5.jpeg) no-repeat center top;
+	background: url(../img/happyscope/IMG_9283_edit.jpg) no-repeat center top;
 	margin-top: 0px;
-	padding-top:120px;
+	/*padding-top:120px;*/
 	text-align:center;
 	background-attachment: relative;
 	background-position: center center;
@@ -348,7 +348,7 @@ h1, h2, h3, h4, h5, h6 {
 	position: relative;
 }
 .about {
-	background-image: url(../img/produk/7.jpeg);
+	background-image: url(../img/happyscope/IMG_9287_edit.jpg);
 /*	background-image: url(../img/about-sep.jpg);*/
 }
 
@@ -508,4 +508,16 @@ h1, h2, h3, h4, h5, h6 {
 
 .desc {
 	margin-top: 25px;
+}
+
+
+
+.special-container > div {
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 22%;
+}
+
+.special-container-no-margin {
+	margin: 0;
 }
