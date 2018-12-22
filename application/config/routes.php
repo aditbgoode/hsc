@@ -40,6 +40,7 @@
 
 $route['default_controller'] = "ind";
 $route['404_override'] = '';
+// $route['static_client'] = 'static_client/view';
 
 
 /* End of file routes.php */
