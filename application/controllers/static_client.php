@@ -5,4 +5,8 @@ class Static_client extends CI_Controller {
 	public function index(){
 		$this->load->view('page/hs.html');
 	}
+
+    public function new(){
+        $this->load->view('page/new.html');
+    }
 }
