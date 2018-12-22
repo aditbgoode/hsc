@@ -6,7 +6,7 @@ class Static_client extends CI_Controller {
 		$this->load->view('page/hs.html');
 	}
 
-    public function new(){
+    public function slider(){
         $this->load->view('page/new.html');
     }
 }
