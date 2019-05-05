@@ -463,6 +463,11 @@
             var totalHappy = [];
             var totalNormal = [];
             var totalAngry = [];
+
+            var totalHappyCount = [];
+            var totalNormalCount = [];
+            var totalAngryCount = [];
+            
             var filesx = {
                 happy: [],
                 normal: [],
@@ -472,7 +477,14 @@
                 totalHappy[i] = 0;
                 totalNormal[i] = 0;
                 totalAngry[i] = 0;
+
+                totalHappyCount[i] = 0;
+                totalNormalCount[i] = 0;
+                totalAngryCount[i] = 0;
             }
+
+            let counter = 1;
+
             // Classify all data
             for(x in allData.happyscope){
                 var insDataX = allData.happyscope[x];
@@ -511,39 +523,58 @@
                             continue;
                         }
 
+                        if (!insDataX.status_audio || !insDataX.status_image) {
+                            continue;
+                        }
+
                         // console.log("5");
 
                         totalSementaraHappy += happy;
                         totalSementaraNormal += normal;
                         totalSementaraAngry += angry;
 
-                        totalHappy[genderIndex] += happy;
-                        totalNormal[genderIndex] += normal;
-                        totalAngry[genderIndex] += angry;
+                        totalHappy[1] += happy;
+                        totalNormal[1] += normal;
+                        totalAngry[1] += angry;
+
+                        totalHappyCount[1]    += happy >= normal && happy >= angry ? 1 : 0;
+                        totalNormalCount[1]   += normal >= happy && normal >= angry ? 1 : 0;
+                        totalAngryCount[1]    += angry >= normal && angry >= happy ? 1 : 0;
+
+                        if (happy > normal && happy > angry) {
+                            console.log(counter, "Happy + 1")
+                        } else if (normal > happy && normal > angry) {
+                            console.log(counter, "Normal + 1")
+                        } else if (angry > normal && angry > happy) {
+                            console.log(counter, "Angry + 1")
+                        } else {
+                            console.log(counter, `NONE angry: ${angry}, normal: ${normal}, happy: ${happy}`);
+                        }
+                        counter++;
                     }
 
                     moment.locale('id');
                     if(insDataX.status_audio){
                         if(totalSementaraHappy > totalSementaraAngry && totalSementaraHappy > totalSementaraNormal)
                             filesx.happy.push({
-                                'image': insDataX.status_image ? insDataX.image : null,
-                                'audio': insDataX.status_audio ? insDataX.audio : null,
-                                'ts': insDataX.timestamp,
-                                'date': moment(new Date(insDataX.timestamp * 1000)).format('DD MMMM YYYY HH:mm:ss')
+                                'image' : insDataX.status_image ? insDataX.image : null,
+                                'audio' : insDataX.status_audio ? insDataX.audio : null,
+                                'ts'    : insDataX.timestamp,
+                                'date'  : moment(new Date(insDataX.timestamp * 1000)).format('DD MMMM YYYY HH:mm:ss')
                             });
                         else if (totalSementaraAngry > totalSementaraHappy && totalSementaraAngry > totalSementaraNormal) {
                             filesx.angry.push({
-                                'image': insDataX.status_image ? insDataX.image : null,
-                                'audio': insDataX.status_audio ? insDataX.audio : null,
-                                'ts': insDataX.timestamp,
-                                'date': moment(new Date(insDataX.timestamp * 1000)).format('DD MMMM YYYY HH:mm:ss')
+                                'image' : insDataX.status_image ? insDataX.image : null,
+                                'audio' : insDataX.status_audio ? insDataX.audio : null,
+                                'ts'    : insDataX.timestamp,
+                                'date'  : moment(new Date(insDataX.timestamp * 1000)).format('DD MMMM YYYY HH:mm:ss')
                             });
-                        }else{
+                        } else {
                             filesx.normal.push({
-                                'image': insDataX.status_image ? insDataX.image : null,
-                                'audio': insDataX.status_audio ? insDataX.audio : null,
-                                'ts': insDataX.timestamp,
-                                'date': moment(new Date(insDataX.timestamp * 1000)).format('DD MMMM YYYY HH:mm:ss')
+                                'image' : insDataX.status_image ? insDataX.image : null,
+                                'audio' : insDataX.status_audio ? insDataX.audio : null,
+                                'ts'    : insDataX.timestamp,
+                                'date'  : moment(new Date(insDataX.timestamp * 1000)).format('DD MMMM YYYY HH:mm:ss')
                             });
                         }
                     }
@@ -551,9 +582,14 @@
             }
             var female = [totalHappy[0], totalNormal[0], totalAngry[0]];
             var male = [totalHappy[1], totalNormal[1], totalAngry[1]];
+
+            var female_count    = [];
+            var male_count      = [filesx.happy.length, filesx.normal.length, filesx.angry.length];
             return {
                 'male': male,
                 'female': female,
+                'male_count': male_count,
+                'female_count': female_count,
                 'files': filesx
             }
         }
@@ -601,7 +637,7 @@
                     var bDate = new Date(to_date).getTime();
                     var data = getDataFromRangeDate(aDate, bDate, filterParam);
                     console.log(new Date(aDate), new Date(bDate), data);
-                    showMelFemaleChart(data['male'], data['female']);
+                    showMelFemaleChart(data['male_count'], data['female_count']);
                     console.log(data['files']);
                     showMelFemaleDataFiles(data['files']);
                     $('#select_data').hide();
