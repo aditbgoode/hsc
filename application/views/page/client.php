@@ -115,16 +115,6 @@
             <br/>
             <br/>
         <div/>
-        <!-- Menampilkan chart per hari selama seminggu terakhir -->
-        <div class="col-md-12" style="padding-left: 0; padding-right: 0;">
-            <div class="x_panel" style="background: rgba(0, 0, 0, .05);">
-                <div class="x_content">
-                    <!-- <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-                    <br/><br/> -->
-                    <div id="echart_line" style="height:350px;">Daily Charts</div>
-                </div>
-            </div>
-        </div>
         
 
         <style type="text/css">
