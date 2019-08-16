@@ -513,7 +513,11 @@
                             continue;
                         }
 
-                        if (!insDataX.status_audio || !insDataX.status_image) {
+                        // revs
+                        // if (!insDataX.status_audio || !insDataX.status_image) {
+                        //     continue;
+                        // }
+                        if (!insDataX.status_image) {
                             continue;
                         }
 
