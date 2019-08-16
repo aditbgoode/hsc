@@ -548,7 +548,8 @@
                     }
 
                     moment.locale('id');
-                    if(insDataX.status_audio){
+                    //if(insDataX.status_audio){
+                    if(true){
                         if(totalSementaraHappy > totalSementaraAngry && totalSementaraHappy > totalSementaraNormal)
                             filesx.happy.push({
                                 'image' : insDataX.status_image ? insDataX.image : null,
